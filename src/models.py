@@ -1,12 +1,17 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, Enum
 from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy import create_engine
 from eralchemy2 import render_er
-from enum import Enum 
+from enum import enum 
 
 Base = declarative_base()
+
+class MyEnum(enum.Enum):
+    one = 1
+    two = 2
+    three = 3
 
 class User(Base):
     __tablename__ = "user"
@@ -34,7 +39,7 @@ class Comment(Base):
 class Media(Base):
     __tablename__ = "media"
     ID = Column(Integer, primary_key=True)
-    type = Column(Enum)
+    type = Column(Enum(MyEnum))
     url = Column(String(100))
     post_id = Column(Integer, ForeignKey("post.id"))
     user_relationship = relationship(Post)
